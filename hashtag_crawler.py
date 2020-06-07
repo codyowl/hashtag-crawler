@@ -4,6 +4,17 @@ from tweepy_api import tweepy_auth, tweepy_cursor
 from git_api import create_git_gist
 import tweepy
 import time
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument('-id', '--id', help="Enter the twitter id", required=True)
+parser.add_argument('-hashtag', '--hashtag', help="Enter the hashtag", required=True)
+parser.add_argument('-save', '--save', help="Where to save", required=True)
+
+arguments = parser.parse_args()
+id = arguments.id
+hashtag = "#" + arguments.hashtag 
+save = arguments.save
 
 ascii_menu_drawing = r"""
                                                     ,_    /) (\    _,
@@ -71,11 +82,7 @@ if __name__ == "__main__":
     github_access_token, github_client_id, github_client_secret = get_credentials(credentials_dict, github=True)
     # authenticating using tweepy
     api = tweepy_auth(twitter_consumer_key, twitter_consumer_secret, twitter_access_token, twitter_access_token_secret)
-    # hardcoding id and hashtag 
-    id = "codyowl_"
-    hashtag = "#100daysofcode"
-    
     tweets_list = crawl_tweet_from_account_based_on_hastag(api, id, hashtag)
     # writing tweets to git gist
-    create_git_gist(tweets_list, github_access_token)
+    create_git_gist(hashtag, tweets_list, github_access_token)
 
