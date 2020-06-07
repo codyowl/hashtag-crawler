@@ -1,0 +1,14 @@
+For getting git hub access tokens :
+
+Steps to get credentials to access git gist:
+1.Register your application : https://github.com/settings/applications/new
+2.Fill up the mandatory fields : for the url give your custom url
+3.Once you done registring your application you will be navigated to your application's page
+4.Click Personal access tokens on the left menu bar
+5.Click "Generate new token" button.
+6.The above step will ask for your password.
+7.Once you done generating a new token you will be nagivated to the token's settings page.
+8.Make sure the tick the "create gist" option from the list of scopes and clicke Generate token button at the bottom.
+9.Make sure to copy the Peronsl access token you got.
+10.Press OAuth Apps on the left menu bar , there we can see our 
+Client Id and Client Secret
