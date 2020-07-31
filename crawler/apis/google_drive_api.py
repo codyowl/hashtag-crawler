@@ -1,25 +1,28 @@
 
+class GoogleDriveApi:
+    # function to create google docs
+    def create_google_docs(self,title):
+        self.title = title
+    	
+    	body = {
+    	    'title': self.title
+    	}
+    	doc = service.documents() \
+    	    .create(body=body).execute()
+    	print('Created document with title: {0}'.format(doc.get('title')))
 
-# function to create google docs
-def create_google_docs(title):
-	
-	body = {
-	    'title': title
-	}
-	doc = service.documents() \
-	    .create(body=body).execute()
-	print('Created document with title: {0}'.format(doc.get('title')))
+    def inserting_tweets_to_google_docs(self, tweets):
+        self.tweets = tweets
 
-def inserting_tweets_to_google_docs(tweets):
-	requests = [
-         {
-            'insertText': {
-                'location': {
-                    'index': 25,
-                },
-                'text': tweets
-            }
-        },
-    ]
+    	requests = [
+             {
+                'insertText': {
+                    'location': {
+                        'index': 25,
+                    },
+                    'text': self.tweets
+                }
+            },
+        ]
 
-    result = service.documents().batchUpdate(documentId=DOCUMENT_ID, body={'requests': requests}).execute()
+        result = service.documents().batchUpdate(documentId=DOCUMENT_ID, body={'requests': requests}).execute()
