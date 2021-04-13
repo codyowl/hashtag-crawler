@@ -1,7 +1,8 @@
 from clint.textui import colored, puts
 import yaml
-from tweepy_api import tweepy_auth, tweepy_cursor
-from git_api import create_git_gist
+from crawler.apis.tweepy_api import TweepyApi
+from crawler.apis.git_api import GitHubApi
+from crawler.apis.google_drive_api import GoogleDriveApi
 import tweepy
 import time
 import argparse
@@ -67,8 +68,8 @@ def get_credentials(credentials_dict, twitter=None, github=None, evernote=None):
 
     
 # function to read all tweets from a particular account based on hashtag
-def crawl_tweet_from_account_based_on_hastag(api, id, hashtag):
-    tweets_list = tweepy_cursor(api, id, hashtag)
+def crawl_tweet_from_account_based_on_hastag(id, hashtag, tweepy_api):
+    tweets_list = tweepy_api.tweepy_cursor(id, hashtag)
     return tweets_list
 
 
@@ -81,8 +82,15 @@ if __name__ == "__main__":
     # reading credentials from yaml file for github
     github_access_token, github_client_id, github_client_secret = get_credentials(credentials_dict, github=True)
     # authenticating using tweepy
-    api = tweepy_auth(twitter_consumer_key, twitter_consumer_secret, twitter_access_token, twitter_access_token_secret)
-    tweets_list = crawl_tweet_from_account_based_on_hastag(api, id, hashtag)
-    # writing tweets to git gist
-    create_git_gist(hashtag, tweets_list, github_access_token)
+    tweepy_api = TweepyApi()
+    api = tweepy_api.tweepy_auth(twitter_consumer_key, twitter_consumer_secret, twitter_access_token, twitter_access_token_secret)
+    tweets_list = crawl_tweet_from_account_based_on_hastag(id, hashtag, tweepy_api)
+    tweets_list = ["hai", "hello"]
+    if save == "git":
+        # writing tweets to git gist
+        create_git_gist(hashtag, tweets_list, github_access_token)
+    elif save == "sheets":
+        google_drive_api = GoogleDriveApi("sheets", hashtag, tweets_list)
+        google_drive_api.write_tweets_to_google_sheets()
+
 

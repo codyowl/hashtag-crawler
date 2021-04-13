@@ -12,7 +12,7 @@ class TweepyApi:
 
 		self.auth = tweepy.OAuthHandler(self.consumer_key, self.consumer_secret)
 		self.auth.set_access_token(self.access_token, self.access_token_secret)
-		self.api = tweepy.API(auth)
+		self.api = tweepy.API(self.auth)
 		return self.api
 
 	# function to use Cursor to get all tweets based on hashtags
