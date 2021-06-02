@@ -27,4 +27,4 @@ rsa==4.1
 six==1.15.0
 tweepy==3.8.0
 uritemplate==3.0.1
-urllib3==1.25.9
+urllib3==1.26.5
